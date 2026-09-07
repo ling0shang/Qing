@@ -1,0 +1,86 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "dev",
+      "displayName": "Development (Ninja Multi-Config)",
+      "description": "Cross-platform development configuration",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+        "QING_BUILD_TESTS": "OFF",
+        "QING_ENABLE_WARNINGS": "ON"
+      }
+    },
+    {
+      "name": "dev-makefiles",
+      "displayName": "Development (Unix Makefiles)",
+      "description": "Fallback for systems without Ninja",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "QING_BUILD_TESTS": "OFF",
+        "QING_ENABLE_WARNINGS": "ON"
+      }
+    },
+    {
+      "name": "dev-windows",
+      "displayName": "Development Windows (Visual Studio 2022)",
+      "description": "Windows development configuration for MSVC",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+        "QING_BUILD_TESTS": "OFF",
+        "QING_ENABLE_WARNINGS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "dev-debug",
+      "configurePreset": "dev",
+      "configuration": "Debug"
+    },
+    {
+      "name": "dev-release",
+      "configurePreset": "dev",
+      "configuration": "Release"
+    },
+    {
+      "name": "dev-makefiles-debug",
+      "configurePreset": "dev-makefiles"
+    },
+    {
+      "name": "dev-windows-debug",
+      "configurePreset": "dev-windows",
+      "configuration": "Debug"
+    },
+    {
+      "name": "dev-windows-release",
+      "configurePreset": "dev-windows",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "dev-tests",
+      "configurePreset": "dev",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}
